@@ -1582,6 +1582,28 @@ class SupportStrTest extends TestCase
             $this->assertSame($expected, Str::chopEnd($subject, $needle));
         }
     }
+
+    public function testFlattenObject()
+    {
+        $arr = [
+            'a' => [
+                'e' => [
+                    'f'=> 4,
+                ],
+                'b' => [
+                    'c' => 1,
+                ],
+            ],
+            'd' => [2, 3],
+        ];
+
+        $flatten = Str::flattenObject($arr);
+
+        $this->assertEquals(1, $flatten['a.b.c']);
+        $this->assertEquals(2, $flatten['d.0']);
+        $this->assertEquals(3, $flatten['d.1']);
+        $this->assertEquals(4, $flatten['a.e.f']);
+    }
 }
 
 class StringableObjectStub

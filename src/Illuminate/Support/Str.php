@@ -1985,4 +1985,21 @@ class Str
         static::$camelCache = [];
         static::$studlyCache = [];
     }
+
+    public static function flattenObject(array $array, string $prefix = ''): array
+    {
+        $result = [];
+
+        foreach ($array as $key => $value) {
+            $newKey = $prefix . $key;
+
+            if (is_array($value)) {
+                $result += self::flattenObject($value, "{$newKey}.");
+            } else {
+                $result[$newKey] = $value;
+            }
+        }
+
+        return $result;
+    }
 }
